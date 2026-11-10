@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>MemeVerse – Memes, Roasts & Viral Games</title>
+<meta name="description" content="Free memes, AI-style roast cards, meme personality quizzes, a rage clicker and meme sounds. Share with your friends!">
+<meta property="og:title" content="MemeVerse – Memes, Roasts & Viral Games">
+<meta property="og:description" content="Roast your friends, take the meme personality quiz and share the chaos.">
+<!-- Google AdSense Auto ads: replace XXXX with your publisher ID -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root { --primary:#7928CA; --secondary:#FF0080; --accent:#00DFD8; --dark:#0f172a; }
+body { background:var(--dark); color:#fff; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; overflow-x:hidden; }
+.hero-section { background:linear-gradient(135deg,rgba(121,40,202,.85),rgba(255,0,128,.85)); padding:60px 20px; border-radius:0 0 30px 30px; box-shadow:0 10px 30px rgba(255,0,128,.3); }
+.card-custom { background:rgba(30,41,59,.75); backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,.1); border-radius:20px; transition:transform .3s,box-shadow .3s; }
+.card-custom:hover { transform:translateY(-5px); box-shadow:0 10px 25px rgba(0,223,216,.2); }
+.btn-gradient { background:linear-gradient(45deg,var(--secondary),var(--primary)); color:#fff; border:none; border-radius:50px; font-weight:bold; padding:12px 30px; transition:all .3s; }
+.btn-gradient:hover { transform:scale(1.05); box-shadow:0 0 15px var(--secondary); color:#fff; }
+.sound-btn { background:#1e293b; border:2px solid var(--accent); color:var(--accent); border-radius:15px; padding:15px; font-weight:bold; cursor:pointer; transition:all .2s; }
+.sound-btn:active { transform:scale(.95); background:var(--accent); color:#000; }
+.clicker-box { font-size:3rem; font-weight:900; background:-webkit-linear-gradient(#00DFD8,#FF0080); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.output-box { min-height:90px; }
+.new-tag { font-size:.7rem; background:var(--accent); color:#000; padding:2px 8px; border-radius:10px; font-weight:bold; vertical-align:middle; }
+.share-btn { border-radius:50px; font-size:.9rem; }
+.burst { position:fixed; font-size:1.8rem; pointer-events:none; animation:fly 1s ease-out forwards; z-index:9999; }
+@keyframes fly { to { transform:translateY(-120px) rotate(360deg); opacity:0; } }
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-dark bg-dark px-4 border-bottom border-secondary">
+  <a class="navbar-brand fw-bold fs-3" href="index.html">🔥 MemeVerse <span class="fs-6 text-muted">| Viral Hub</span></a>
+  <button id="admin-btn" class="btn btn-outline-light btn-sm rounded-pill d-none" data-bs-toggle="modal" data-bs-target="#adminModal">+ Add Feature</button>
+</nav>
+
+<div class="container text-center hero-section my-3">
+  <h1 class="display-4 fw-bold mb-3">Your Daily Dose of Chaos 🚀</h1>
+  <p class="lead">Roast your friends, find your meme personality, and share the madness.</p>
+  <div class="d-flex flex-wrap justify-content-center gap-2 mt-3">
+    <button class="btn btn-light share-btn" data-action="share-wa"><i class="fa-brands fa-whatsapp"></i> Share on WhatsApp</button>
+    <button class="btn btn-dark share-btn" data-action="share-x"><i class="fa-brands fa-x-twitter"></i> Share on X</button>
+    <button class="btn btn-outline-light share-btn" data-action="copy-link"><i class="fa-solid fa-link"></i> Copy Link</button>
+  </div>
+  <a href="#features" class="btn btn-gradient btn-lg mt-4">Start Playing <i class="fa-solid fa-arrow-down ms-2"></i></a>
+</div>
+
+<div class="container my-5">
+  <div class="row g-4" id="features"></div>
+</div>
+
+<!-- Owner-only Feature Studio -->
+<div class="modal fade" id="adminModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content bg-dark text-white border-secondary">
+      <div class="modal-header border-secondary">
+        <h5 class="modal-title"><i class="fa-solid fa-wand-magic-sparkles text-success me-2"></i> Feature Studio</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p class="text-muted small">Preview here. For everyone to see, Export the JSON and paste it in <code>features.json</code>.</p>
+        <div class="row g-3">
+          <div class="col-md-6"><label class="form-label">Title</label><input id="f-title" class="form-control bg-secondary text-white"></div>
+          <div class="col-md-3"><label class="form-label">Type</label>
+            <select id="f-type" class="form-select bg-secondary text-white">
+              <option value="roast">Roast</option><option value="card">Random Card</option><option value="sound">Soundboard</option><option value="clicker">Clicker</option>
+            </select></div>
+          <div class="col-md-3"><label class="form-label">Color</label>
+            <select id="f-color" class="form-select bg-secondary text-white">
+              <option value="warning">Yellow</option><option value="info">Cyan</option><option value="danger">Red</option><option value="success">Green</option>
+            </select></div>
+          <div class="col-12"><label class="form-label">Description</label><input id="f-desc" class="form-control bg-secondary text-white"></div>
+          <div class="col-12"><label class="form-label">Content <span class="text-muted small" id="f-hint"></span></label>
+            <textarea id="f-items" rows="5" class="form-control bg-secondary text-white"></textarea></div>
+        </div>
+        <button class="btn btn-gradient w-100 mt-3" id="f-save">Save & Preview</button>
+        <hr class="border-secondary my-4">
+        <div id="custom-list" class="small mb-3"></div>
+        <button class="btn btn-outline-light btn-sm rounded-pill" id="btn-export">Export JSON</button>
+        <textarea id="io" rows="6" class="form-control bg-secondary text-white font-monospace small mt-2"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="text-center py-4 border-top border-secondary mt-5 text-muted">
+  <p class="mb-2"><a class="text-muted mx-2" href="about.html">About</a> | <a class="text-muted mx-2" href="contact.html">Contact</a> | <a class="text-muted mx-2" href="privacy.html">Privacy Policy</a> | <a class="text-muted mx-2" href="terms.html">Terms</a></p>
+  <p>© 2026 MemeVerse. All rights reserved.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+/* ---------- Default features (mirror of features.json, used if the JSON can't load) ---------- */
+const FALLBACK_FEATURES = [
+  { id:"roast", type:"roast", title:"AI Roast Generator", icon:"fa-fire", color:"warning",
+    desc:"Type a name and get a savage roast card with a Roast Level score. Send it to your group chat.",
+    items:[
+      { title:"The Professional Scroller", text:"You spend 12 hours on your phone and still say you're busy." },
+      { title:"The Silent Listener", text:"You read every message in the group and never reply. Are you Agent 007?" },
+      { title:"The Midnight Chef", text:"Your 2 AM Maggi skills are unmatched. Chef Gordon is shaking." },
+      { title:"The Future Billionaire", text:"Your plans are legendary. Execution starts after 11 AM on Sunday." }
+    ] },
+  { id:"quiz", type:"quiz", title:"What's Your Meme Personality?", icon:"fa-brain", color:"info",
+    desc:"Answer 3 quick questions and find out which meme you really are.",
+    questions:[
+      { q:"Your friends are planning a trip. You...", options:[
+        { text:"Book everything and make a group itinerary", tag:"boss" },
+        { text:"Say 'I'm in!' and then sleep through the alarm", tag:"chaos" },
+        { text:"Bring snacks and watch everyone argue", tag:"observer" } ] },
+      { q:"Your favorite notification is...", options:[
+        { text:"A 'like' on a post you forgot you made", tag:"chaos" },
+        { text:"Your bank account showing a surprise credit", tag:"boss" },
+        { text:"A silent group chat that ends with 'lol'", tag:"observer" } ] },
+      { q:"When someone says 'Trust me bro'...", options:[
+        { text:"You ask for proof", tag:"observer" },
+        { text:"You say 'Bro, I'm screenshotting this'", tag:"chaos" },
+        { text:"You invest anyway", tag:"boss" } ] }
+    ],
+    results:{
+      boss:   { title:"The Main Character 👑", text:"You plan, you lead, you're the reason the group works. Everyone else is just following." },
+      chaos:  { title:"The Chaos Gremlin 💥", text:"You make the plans, break the plans, and somehow it still ends up as a legendary story." },
+      observer:{ title:"The Silent Observer 👀", text:"You see everything, say nothing, and drop the one line that wins the whole group chat." }
+    } },
+  { id:"clicker", type:"clicker", title:"Rage Clicker", icon:"fa-hand-pointer", color:"info",
+    desc:"How fast can you click? Beat your best score. Confetti every 50 clicks!" },
+  { id:"sound", type:"sound", title:"Meme Soundboard", icon:"fa-volume-high", color:"danger",
+    desc:"Tap a sound and let the chaos speak for you.",
+    items:[
+      { label:"🔊 Bruh", src:"" },
+      { label:"💥 Emotional Damage", src:"" },
+      { label:"😂 Laugh Track", src:"" },
+      { label:"🎉 Victory Horn", src:"" }
+    ] },
+  { id:"quotes", type:"card", title:"Meme Quote of the Day", icon:"fa-quote-left", color:"success",
+    desc:"Tap the button for a random line made for sharing.",
+    items:[
+      "Monday mood: just five more minutes of being a potato.",
+      "I have a plan. I just haven't started the plan.",
+      "Battery at 1%, but attitude at 100%."
+    ] }
+];
+
+/* ---------- State ---------- */
+const STORAGE_KEY = "memeverse_custom_features";
+const BEST_KEY = "memeverse_clicker_best";
+let features = [];
+const clickState = {};
+const quizState = {};
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+const SITE_URL = "https://claude.ai/artifact/UXkzyVGB6uLffPFjzCsTh5";
+const SHARE_BASE = (typeof location !== "undefined" && location.protocol.startsWith("http") && !location.hash.startsWith("#admin")) ? location.href.split("#")[0] : SITE_URL;
+
+function loadCustom() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch (e) { return []; } }
+function saveCustom(list) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); } catch (e) {} }
+
+async function init() {
+  let base = FALLBACK_FEATURES;
+  try { const r = await fetch("features.json", { cache: "no-store" }); if (r.ok) base = await r.json(); } catch (e) {}
+  features = [...base, ...loadCustom()];
+  render();
+  renderCustomList();
+}
+
+/* ---------- Rendering ---------- */
+function cardHtml(f) {
+  const col = f.type === "sound" ? "col-12" : "col-lg-6";
+  const id = esc(f.id);
+  let body = "";
+  if (f.type === "roast") {
+    body = `
+      <div class="mb-3"><input id="in-${id}" class="form-control bg-dark text-white border-secondary" placeholder="Enter a name..."></div>
+      <button class="btn btn-gradient w-100 mb-3" data-action="roast" data-id="${id}">Roast Them 🔥</button>
+      <div id="out-${id}" class="p-3 rounded bg-dark border border-secondary text-center d-none"></div>`;
+  } else if (f.type === "quiz") {
+    body = `<div id="out-${id}"><button class="btn btn-gradient w-100" data-action="quiz-start" data-id="${id}">Start the Quiz ▶</button></div>`;
+  } else if (f.type === "clicker") {
+    const best = Number(localStorage.getItem(BEST_KEY) || 0);
+    body = `
+      <div class="text-center">
+        <div class="clicker-box my-2" id="out-${id}">${clickState[f.id]?.count || 0}</div>
+        <p class="text-muted mb-1" id="speed-${id}">Speed: 0 clicks/sec</p>
+        <p class="small text-info mb-3">Best score: <span id="best-${id}">${best}</span></p>
+        <button class="btn btn-gradient btn-lg w-100 py-3" data-action="click" data-id="${id}">CLICK FAST! ⚡</button>
+      </div>`;
+  } else if (f.type === "sound") {
+    body = `<div class="row g-3">${(f.items || []).map((s, i) =>
+      `<div class="col-6 col-md-3"><button class="sound-btn w-100" data-action="sound" data-id="${id}" data-i="${i}">${esc(s.label)}</button></div>`
+    ).join("")}</div>`;
+  } else {
+    body = `
+      <div id="out-${id}" class="output-box d-flex align-items-center justify-content-center p-3 rounded bg-dark border border-secondary text-center fs-5 mb-3">Tap the button!</div>
+      <button class="btn btn-gradient w-100" data-action="card" data-id="${id}">Next ▶</button>`;
+  }
+  return `
+    <div class="${col}">
+      <div class="card-custom p-4 h-100">
+        <h3 class="fw-bold text-${esc(f.color || "warning")} mb-3">
+          <i class="fa-solid ${esc(f.icon || "fa-star")} me-2"></i>${esc(f.title)}
+          ${f.custom ? '<span class="new-tag ms-2">NEW</span>' : ""}
+        </h3>
+        <p class="text-secondary">${esc(f.desc || "")}</p>
+        ${body}
+      </div>
+    </div>`;
+}
+
+function render() {
+  document.getElementById("features").innerHTML = features.map(cardHtml).join("");
+}
+
+/* ---------- Helpers ---------- */
+function shareLinks(text) {
+  const t = encodeURIComponent(text + " " + SHARE_BASE);
+  return `<a class="btn btn-outline-success btn-sm rounded-pill me-2" href="https://wa.me/?text=${t}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+          <a class="btn btn-outline-light btn-sm rounded-pill" href="https://twitter.com/intent/tweet?text=${t}" target="_blank" rel="noopener"><i class="fa-brands fa-x-twitter"></i> X</a>`;
+}
+function burst(x, y) {
+  ["🎉","🔥","💥","😂","⚡"].forEach((emoji, i) => {
+    const el = document.createElement("div");
+    el.className = "burst";
+    el.textContent = emoji;
+    el.style.left = (x + (i - 2) * 20) + "px";
+    el.style.top = (y - 10) + "px";
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1000);
+  });
+}
+function openShareText(text) { window.open("https://wa.me/?text=" + encodeURIComponent(text + " " + SHARE_BASE), "_blank"); }
+
+/* ---------- Actions ---------- */
+document.body.addEventListener("click", e => {
+  const btn = e.target.closest("[data-action]");
+  if (!btn) return;
+  const act = btn.dataset.action;
+
+  // Global share bar
+  if (act === "share-wa") return openShareText("Check out MemeVerse, the funniest corner of the internet! 🔥");
+  if (act === "share-x") return window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent("Check out MemeVerse! 🔥 " + SHARE_BASE), "_blank");
+  if (act === "copy-link") {
+    navigator.clipboard?.writeText(SHARE_BASE).then(() => alert("Link copied! Share it with your friends 🔥")).catch(() => prompt("Copy this link:", SHARE_BASE));
+    return;
+  }
+  if (act === "share") return openShareText(btn.dataset.text);
+
+  const f = features.find(x => x.id === btn.dataset.id);
+  if (!f) return;
+
+  if (act === "roast") {
+    const name = document.getElementById("in-" + f.id).value.trim();
+    if (!name) { alert("Please enter a name first!"); return; }
+    const r = pick(f.items || []);
+    if (!r) return;
+    const level = 60 + Math.floor(Math.random() * 41);
+    const out = document.getElementById("out-" + f.id);
+    out.classList.remove("d-none");
+    const shareText = `${name} got roasted on MemeVerse: "${r.title}" | Roast Level ${level}/100 🔥`;
+    out.innerHTML = `
+      <h4 class="text-info fw-bold">${esc(name)} – ${esc(r.title)}</h4>
+      <p class="fs-5 my-3">"${esc(r.text)}"</p>
+      <p class="fw-bold text-warning">Roast Level: ${level}/100 🔥</p>
+      <div>${shareLinks(shareText)}</div>`;
+  }
+
+  if (act === "quiz-start") {
+    quizState[f.id] = { step: 0, tags: {} };
+    renderQuiz(f);
+  }
+
+  if (act === "quiz-answer") {
+    const s = quizState[f.id];
+    s.tags[btn.dataset.tag] = (s.tags[btn.dataset.tag] || 0) + 1;
+    s.step++;
+    renderQuiz(f);
+  }
+
+  if (act === "click") {
+    const s = clickState[f.id] || (clickState[f.id] = { count: 0, times: [] });
+    const now = Date.now();
+    s.count++;
+    s.times.push(now);
+    s.times = s.times.filter(t => now - t <= 1000);
+    document.getElementById("out-" + f.id).innerText = s.count;
+    document.getElementById("speed-" + f.id).innerText = `Speed: ${s.times.length} clicks/sec`;
+    const best = Math.max(s.count, Number(localStorage.getItem(BEST_KEY) || 0));
+    try { localStorage.setItem(BEST_KEY, best); } catch (err) {}
+    document.getElementById("best-" + f.id).innerText = best;
+    if (s.count % 50 === 0) burst(btn.getBoundingClientRect().left + btn.offsetWidth / 2, btn.getBoundingClientRect().top);
+  }
+
+  if (act === "sound") {
+    const s = (f.items || [])[Number(btn.dataset.i)];
+    if (!s) return;
+    if (s.src) new Audio(s.src).play().catch(() => alert("Could not play this sound."));
+    else alert(`Playing: ${s.label} 🔊 (Add an audio file URL in features.json)`);
+  }
+
+  if (act === "card") {
+    document.getElementById("out-" + f.id).innerText = pick(f.items || ["No items yet."]);
+  }
+});
+
+function renderQuiz(f) {
+  const s = quizState[f.id];
+  const out = document.getElementById("out-" + f.id);
+  const qs = f.questions || [];
+  if (s.step < qs.length) {
+    const q = qs[s.step];
+    out.innerHTML = `
+      <p class="text-muted small">Question ${s.step + 1} of ${qs.length}</p>
+      <p class="fs-5 fw-bold">${esc(q.q)}</p>
+      <div class="d-grid gap-2">${q.options.map(o =>
+        `<button class="btn btn-outline-light" data-action="quiz-answer" data-id="${esc(f.id)}" data-tag="${esc(o.tag)}">${esc(o.text)}</button>`
+      ).join("")}</div>`;
+  } else {
+    const winner = Object.entries(s.tags).sort((a, b) => b[1] - a[1])[0]?.[0];
+    const r = (f.results || {})[winner] || { title: "Mystery Meme", text: "You're too mysterious to categorize." };
+    out.innerHTML = `
+      <h4 class="text-info fw-bold">${esc(r.title)}</h4>
+      <p class="my-3">${esc(r.text)}</p>
+      <div class="mb-3">${shareLinks(`My MemeVerse personality is: ${r.title}. What's yours?`)}</div>
+      <button class="btn btn-outline-light btn-sm rounded-pill" data-action="quiz-start" data-id="${esc(f.id)}">Retake Quiz</button>`;
+  }
+}
+
+/* ---------- Owner-only access ---------- */
+// SHA-256 hash of the owner password. Setup steps are in README.md.
+const ADMIN_HASH = "PASTE_HASH_HERE";
+
+async function sha256(text) {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
+}
+let isAdmin = false;
+async function tryUnlock() {
+  if (location.hash !== "#admin" || isAdmin) return;
+  const pass = prompt("Owner password:");
+  if (pass === null) return;
+  const hash = await sha256(pass);
+  if (ADMIN_HASH === "PASTE_HASH_HERE" || hash !== ADMIN_HASH) { alert("Wrong password."); return; }
+  isAdmin = true;
+  document.getElementById("admin-btn").classList.remove("d-none");
+  alert("Admin mode on.");
+}
+window.addEventListener("hashchange", tryUnlock);
+
+/* ---------- Feature Studio ---------- */
+const typeHints = {
+  roast: "One per line: Title | Text",
+  card: "One item per line",
+  sound: "One per line: Label | audio-file-url (URL can be empty)",
+  clicker: "No content needed"
+};
+const typeEl = document.getElementById("f-type");
+function updateHint() { document.getElementById("f-hint").innerText = "– " + typeHints[typeEl.value]; }
+typeEl.addEventListener("change", updateHint);
+updateHint();
+
+function parseItems(type, raw) {
+  const lines = raw.split("\n").map(l => l.trim()).filter(Boolean);
+  if (type === "roast") return lines.map(l => { const [t, ...rest] = l.split("|"); return { title: t.trim(), text: rest.join("|").trim() }; });
+  if (type === "sound") return lines.map(l => { const [label, ...rest] = l.split("|"); return { label: label.trim(), src: rest.join("|").trim() }; });
+  if (type === "card") return lines;
+  return [];
+}
+
+document.getElementById("f-save").addEventListener("click", () => {
+  if (!isAdmin) { alert("Owner access required."); return; }
+  const title = document.getElementById("f-title").value.trim();
+  if (!title) { alert("Please enter a title."); return; }
+  const type = typeEl.value;
+  const items = parseItems(type, document.getElementById("f-items").value);
+  if (type !== "clicker" && items.length === 0) { alert("Add at least one item."); return; }
+  const feature = {
+    id: "c-" + Date.now(), custom: true, type, title,
+    desc: document.getElementById("f-desc").value.trim(),
+    icon: type === "roast" ? "fa-fire" : type === "sound" ? "fa-volume-high" : type === "clicker" ? "fa-hand-pointer" : "fa-star",
+    color: document.getElementById("f-color").value,
+    items
+  };
+  const list = loadCustom();
+  list.push(feature);
+  saveCustom(list);
+  features.push(feature);
+  render();
+  renderCustomList();
+  ["f-title", "f-desc", "f-items"].forEach(id => document.getElementById(id).value = "");
+  bootstrap.Modal.getInstance(document.getElementById("adminModal")).hide();
+  document.getElementById("features").scrollIntoView({ behavior: "smooth" });
+});
+
+function renderCustomList() {
+  const list = loadCustom();
+  const box = document.getElementById("custom-list");
+  if (!list.length) { box.innerHTML = `<span class="text-muted">No custom features yet.</span>`; return; }
+  box.innerHTML = list.map(f => `
+    <div class="d-flex justify-content-between align-items-center border-bottom border-secondary py-1">
+      <span>${esc(f.title)} <span class="text-muted">(${esc(f.type)})</span></span>
+      <button class="btn btn-outline-danger btn-sm rounded-pill" data-del="${esc(f.id)}">Delete</button>
+    </div>`).join("");
+}
+document.getElementById("custom-list").addEventListener("click", e => {
+  const id = e.target.dataset.del;
+  if (!id || !isAdmin) return;
+  saveCustom(loadCustom().filter(f => f.id !== id));
+  features = features.filter(f => f.id !== id);
+  render();
+  renderCustomList();
+});
+document.getElementById("btn-export").addEventListener("click", () => {
+  if (!isAdmin) return;
+  document.getElementById("io").value = JSON.stringify(loadCustom().map(({ custom, ...rest }) => rest), null, 2);
+});
+
+init();
+tryUnlock();
+</script>
+</body>
+</html>

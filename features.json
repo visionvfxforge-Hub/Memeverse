@@ -1,0 +1,90 @@
+[
+  {
+    "id": "roast",
+    "type": "roast",
+    "title": "AI Roast Generator",
+    "icon": "fa-fire",
+    "color": "warning",
+    "desc": "Type a name and get a savage roast card with a Roast Level score. Send it to your group chat.",
+    "items": [
+      { "title": "The Professional Scroller", "text": "You spend 12 hours on your phone and still say you're busy." },
+      { "title": "The Silent Listener", "text": "You read every message in the group and never reply. Are you Agent 007?" },
+      { "title": "The Midnight Chef", "text": "Your 2 AM Maggi skills are unmatched. Chef Gordon is shaking." },
+      { "title": "The Future Billionaire", "text": "Your plans are legendary. Execution starts after 11 AM on Sunday." }
+    ]
+  },
+  {
+    "id": "quiz",
+    "type": "quiz",
+    "title": "What's Your Meme Personality?",
+    "icon": "fa-brain",
+    "color": "info",
+    "desc": "Answer 3 quick questions and find out which meme you really are.",
+    "questions": [
+      {
+        "q": "Your friends are planning a trip. You...",
+        "options": [
+          { "text": "Book everything and make a group itinerary", "tag": "boss" },
+          { "text": "Say 'I'm in!' and then sleep through the alarm", "tag": "chaos" },
+          { "text": "Bring snacks and watch everyone argue", "tag": "observer" }
+        ]
+      },
+      {
+        "q": "Your favorite notification is...",
+        "options": [
+          { "text": "A 'like' on a post you forgot you made", "tag": "chaos" },
+          { "text": "Your bank account showing a surprise credit", "tag": "boss" },
+          { "text": "A silent group chat that ends with 'lol'", "tag": "observer" }
+        ]
+      },
+      {
+        "q": "When someone says 'Trust me bro'...",
+        "options": [
+          { "text": "You ask for proof", "tag": "observer" },
+          { "text": "You say 'Bro, I'm screenshotting this'", "tag": "chaos" },
+          { "text": "You invest anyway", "tag": "boss" }
+        ]
+      }
+    ],
+    "results": {
+      "boss": { "title": "The Main Character 👑", "text": "You plan, you lead, you're the reason the group works. Everyone else is just following." },
+      "chaos": { "title": "The Chaos Gremlin 💥", "text": "You make the plans, break the plans, and somehow it still ends up as a legendary story." },
+      "observer": { "title": "The Silent Observer 👀", "text": "You see everything, say nothing, and drop the one line that wins the whole group chat." }
+    }
+  },
+  {
+    "id": "clicker",
+    "type": "clicker",
+    "title": "Rage Clicker",
+    "icon": "fa-hand-pointer",
+    "color": "info",
+    "desc": "How fast can you click? Beat your best score. Confetti every 50 clicks!"
+  },
+  {
+    "id": "sound",
+    "type": "sound",
+    "title": "Meme Soundboard",
+    "icon": "fa-volume-high",
+    "color": "danger",
+    "desc": "Tap a sound and let the chaos speak for you.",
+    "items": [
+      { "label": "🔊 Bruh", "src": "" },
+      { "label": "💥 Emotional Damage", "src": "" },
+      { "label": "😂 Laugh Track", "src": "" },
+      { "label": "🎉 Victory Horn", "src": "" }
+    ]
+  },
+  {
+    "id": "quotes",
+    "type": "card",
+    "title": "Meme Quote of the Day",
+    "icon": "fa-quote-left",
+    "color": "success",
+    "desc": "Tap the button for a random line made for sharing.",
+    "items": [
+      "Monday mood: just five more minutes of being a potato.",
+      "I have a plan. I just haven't started the plan.",
+      "Battery at 1%, but attitude at 100%."
+    ]
+  }
+]
